@@ -16,4 +16,10 @@ class ListTasks extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+    protected function mutateFormDataBeforeFill(array $data): array
+{
+    $data['user_id'] = auth()->id();
+ 
+    return $data;
+}
 }

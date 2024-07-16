@@ -6,6 +6,7 @@ use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers;
 use App\Models\Task;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,19 +26,26 @@ class TaskResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('project_id')
-                    ->required()
-                    ->numeric(),
+               
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('pending'),
-            ]);
+                   
+                   Select::make('status')
+    ->options([
+        'pending' => 'PENDING',
+        'in-progress' => 'PROGRESS',
+        'completed' => 'COMPLETED',
+    ])  ->default('pending')
+    ->required()
+    ,
+    Forms\Components\Select::make('project_id')
+    ->relationship('projects','name')
+    ->required(),      
+    ]);
+    
     }
 
     public static function table(Table $table): Table
@@ -79,6 +87,10 @@ class TaskResource extends Resource
         return [
             //
         ];
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('project_id', auth()->id());
     }
 
     public static function getPages(): array

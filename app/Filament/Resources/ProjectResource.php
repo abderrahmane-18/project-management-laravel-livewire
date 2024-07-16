@@ -33,9 +33,11 @@ class ProjectResource extends Resource
                     ->columnSpanFull()
                     ->fileAttachmentsDirectory('projects')
                    , 
+                   /*
                    Forms\Components\Select::make('user_id')
                    ->relationship('users','name')
                    ->required()
+                   */
              ])
               
                 
@@ -46,6 +48,9 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                ->numeric()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
@@ -80,7 +85,10 @@ class ProjectResource extends Resource
             //
         ];
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
+    }
     public static function getPages(): array
     {
         return [
