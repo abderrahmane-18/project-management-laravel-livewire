@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    
     use HasFactory;
     protected $fillable = [
         'name',
@@ -21,7 +22,7 @@ class Task extends Model
     */
     public function projects()
     {
-        return $this->belongsTo(Project::class,'project_id');
+        return $this->belongsTo(Project::class);
     }
   
 }

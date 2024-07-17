@@ -14,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements FilamentUser
 
 {
+    
     use HasApiTokens, HasFactory, Notifiable,HasRoles;
     
     /**
@@ -48,10 +49,11 @@ class User extends Authenticatable implements FilamentUser
     ];
     public function projects()
     {
-        return $this->hasMany(User::class,'user_id');
+        return $this->hasMany(Project::class);
     }
     public function canAccessPanel(Panel $panel): bool
     {
         return true ;
     }
+    
 }
