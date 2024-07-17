@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\TaskResource\Pages;
+namespace App\Filament\App\Resources\TaskResource\Pages;
 
-use App\Filament\Resources\TaskResource;
+use App\Filament\App\Resources\TaskResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Database\Eloquent\Builder;
 
 class ViewTask extends ViewRecord
 {
@@ -17,5 +16,4 @@ class ViewTask extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
- 
 }
