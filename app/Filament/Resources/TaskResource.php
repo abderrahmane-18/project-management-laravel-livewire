@@ -64,16 +64,16 @@ $id = Auth::id();
     Forms\Components\Select::make('project_id')
 
     #->options(Project::pluck('name','id')->where(User::get('id'),auth()->id()))
-    ->options (Project::pluck('name','id'))
-    /*
+   // ->options (Project::pluck('name','id'))
+   
     ->relationship(
-        name:'projects',
-            titleAttribute:'name',
-         modifyQueryUsing: fn (Builder $query,Get $get) =>$query->withTrashed()
+        'projects',
+         'name',
+
          
           // modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('tasks') 
       )
-          */
+          
    # ->options(\App\Models\Project\Project::all()->pluck('name','id'))
     ->required(),      
     ]);
@@ -88,24 +88,27 @@ $id = Auth::id();
        
       //  echo( $user_project->projects);
         $porjects_user=$user_project->projects;
-        $list=[];
+        $list_project_logged_user=[];
         // Get the currently authenticated user's ID...
         foreach ($porjects_user as $pr) {
    // echo ($pr->id);
-    array_push($list,$pr->id);
+    array_push($list_project_logged_user,$pr->id);
     echo('<br>');
 }
 
-        return parent::getEloquentQuery()->whereIn('project_id', $list);
+        return parent::getEloquentQuery()->whereIn('project_id', $list_project_logged_user);
     }
     public static function table(Table $table): Table
     {
+        
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('project_id')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('projects.description')->label('project-name')
+ ->searchable()
+
+ ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
@@ -133,12 +136,7 @@ $id = Auth::id();
             ]);
     }
    
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $data['user_id'] = auth()->id();
-     
-        return $data;
-    }
+   
     public static function getRelations(): array
     {
         return [

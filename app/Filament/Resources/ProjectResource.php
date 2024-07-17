@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Form;
@@ -53,6 +54,8 @@ class ProjectResource extends Resource
                 ->sortable(),
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
+                    ->formatStateUsing(fn (string $state, User $city): string => __("#$city->id 
+                    $city->name"))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
