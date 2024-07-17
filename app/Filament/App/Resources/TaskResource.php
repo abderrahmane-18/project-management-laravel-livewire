@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
-use App\Filament\Resources\TaskResource\Pages;
-use App\Filament\Resources\TaskResource\RelationManagers;
-use App\Models\Project;
+use App\Filament\App\Resources\TaskResource\Pages;
+use App\Filament\App\Resources\TaskResource\RelationManagers;
 use App\Models\Task;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use App\Models\Project;
+
+use App\Models\User;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class TaskResource extends Resource
 {
@@ -135,8 +134,7 @@ $id = Auth::id();
                 ]),
             ]);
     }
-   
-   
+
     public static function getRelations(): array
     {
         return [
