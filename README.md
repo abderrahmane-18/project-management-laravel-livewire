@@ -65,7 +65,7 @@
     <h2 id="usage">Usage</h2>
     <ol>
         <li>Start the frontend and backend servers as described in the <a href="#installation">Installation</a> section.</li>
-        <li>Access the application in your browser at <code>http://localhost:5173</code> (default) for the frontend and <code>http://localhost:8000</code> (default) for the backend.</li>
+        <li>Access the application in your browser at <code>http://localhost:8000</code> (default).</li>
     </ol>
 
 </body>
