@@ -34,7 +34,8 @@ class ProjectResource extends Resource
                 ->required()
                 ->maxLength(255),
                 
-                 
+                Forms\Components\Textarea::make('description')
+                ->columnSpanFull(),
                   
                 //    Forms\Components\Select::make('user_id')
                 //    ->relationship('users','email')
