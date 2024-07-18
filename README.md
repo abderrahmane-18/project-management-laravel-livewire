@@ -7,7 +7,7 @@
 
 </head>
 <body>
-    <h1>Develop a small web application using Laravel 10 with a dashboard powered by FilamentPHP</h1>
+    <h1>Develop a small web application for A Project Management using Laravel 10 with a dashboard powered by FilamentPHP</h1>
 <h2>Table of Contents</h2>
     <ul>
   
