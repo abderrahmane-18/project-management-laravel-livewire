@@ -33,9 +33,8 @@ class ProjectResource extends Resource
                 Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-                    MarkdownEditor::make('description')
-                    ->columnSpanFull()
-                    ->fileAttachmentsDirectory('projects')
+                Forms\Components\Textarea::make('description')
+                ->columnSpanFull(),
                    , 
                   
                 //    Forms\Components\Select::make('user_id')
