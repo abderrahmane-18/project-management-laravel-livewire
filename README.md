@@ -56,7 +56,7 @@
             <pre><code>php artisan key:generate</code></pre>
         </li>
         <li>Set up the database:
-            <pre><code>php artisan migrate --seed</code></pre>
+            <pre><code>php artisan migrate </code></pre>
         </li>
         <li>Start the development server:
             <pre><code>php artisan serve</code></pre>
