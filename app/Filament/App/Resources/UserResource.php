@@ -1,34 +1,29 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\App\Resources\UserResource\Pages;
+use App\Filament\App\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
-use Filament\Navigation\NavigationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-
-
+use Filament\Forms\Components\Select;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+   
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup='AdminPanel';
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -41,8 +36,11 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                 
-
+                Forms\Components\Select::make('role')
+                    ->required()
+                    ->options(User::ROLES)
+                   
+                    ->default('user'),
             ]);
     }
 
@@ -50,13 +48,13 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-            
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,6 +63,8 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('role')
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -72,6 +72,7 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         /**  @var \App\Models\User $adminUser
         
          */
+        /*
         $adminUser=User::factory()->create([
             'email'=>'super-admin@gmail.com',
               'name'=>'abdelkader',
@@ -32,5 +33,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        */
     }
 }
