@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\ProjectResource\Pages;
 use App\Filament\App\Resources\ProjectResource\RelationManagers;
+use App\Http\Controllers\globalController;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\User;
 use Filament\Forms\Components\MarkdownEditor;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProjectResource extends Resource
 {
@@ -34,11 +37,11 @@ class ProjectResource extends Resource
                     ->columnSpanFull()
                     ->fileAttachmentsDirectory('projects')
                    , 
-                   /*
-                   Forms\Components\Select::make('user_id')
-                   ->relationship('users','name')
-                   ->required()
-                   */
+                  
+                //    Forms\Components\Select::make('user_id')
+                //    ->relationship('users','email')
+                //    ->required()
+                   
              ])
               
                 
@@ -47,15 +50,21 @@ class ProjectResource extends Resource
 
     public static function table(Table $table): Table
     {
+       
+      
+       $project= User::where("id",auth()->id())->get('name');
+       
+
+       Log::info( $project);
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                 ->numeric()
                 ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->formatStateUsing(fn (string $state, User $city): string => __("#$city->id 
-                    $city->name"))
+                Tables\Columns\TextColumn::make(  'user_id')->label('id-user')
+
+                    
+              
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
