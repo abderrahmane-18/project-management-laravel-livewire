@@ -17,7 +17,7 @@
     </ul>
     <h2 id="technologies">Technologies</h2>
     <ul>
-        <li><strong>:</strong> Laravel 10 ,FilamentPhp</li>
+        <li><strong></strong> Laravel 10 ,FilamentPhp</li>
         <li><strong>Database:</strong> PostgreSQL</li>
         <li><strong>Other:</strong> Vite</li>
     </ul>
@@ -25,7 +25,7 @@
     <h3>Prerequisites</h3>
     <ul>
         <li>Node.js and npm</li>
-        <li>PHP (>= 8.2)</li>
+        <li>PHP </li>
         <li>Composer</li>
         <li>PostgreSQL</li>
     </ul>
