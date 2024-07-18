@@ -17,7 +17,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
+use App\Http\Controllers\globalController;
 class TaskResource extends Resource
 {
     protected static ?string $model = Task::class;
@@ -25,24 +27,15 @@ class TaskResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-pencil';
     
     protected static ?string $navigationGroup='User Panel';
-   
+
+
     public static function form(Form $form): Form
     {
+
+        $global_inf=new globalController();
+        $list_project_logged_user= $global_inf->get_inf_project();
         
-
-        $use1=Project::find(8);
-        $user = Auth::user();
-      
- 
-// Get the currently authenticated user's ID...
-$id = Auth::id();
-     
-   //   echo($id );
-      $use2=User::find($id);
-    //  echo("\n");
-     // echo($use2->projects);
-   //  Log::info('Showing the user profile for user: ');
-
+Log::info(Project::whereIn('name', $list_project_logged_user)->get('name'));
         return $form
             ->schema([
                
@@ -62,15 +55,15 @@ $id = Auth::id();
     ,
     Forms\Components\Select::make('project_id')
 
-    #->options(Project::pluck('name','id')->where(User::get('id'),auth()->id()))
-   // ->options (Project::pluck('name','id'))
-   
+//    ->options(Project::pluck('name','id')->where(User::get('id'),auth()->id()))
+   #->options (Project::pluck('name','id')->whereIn('name', $list_project_logged_user)->get('name'))
+  
     ->relationship(
         'projects',
          'name',
 
-         
-          // modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('tasks') 
+         //get only tasks related  a projecf of user logged in
+         modifyQueryUsing: fn (Builder $query) => $query->whereIn('id', $list_project_logged_user),
       )
           
    # ->options(\App\Models\Project\Project::all()->pluck('name','id'))
@@ -80,31 +73,19 @@ $id = Auth::id();
     }
     public static function getEloquentQuery(): Builder
     {
-        $user = Auth::user();
-        $id = Auth::id();
-
-        $user_project=User::find($id);
-       
-      //  echo( $user_project->projects);
-        $porjects_user=$user_project->projects;
-        $list_project_logged_user=[];
-        // Get the currently authenticated user's ID...
-        foreach ($porjects_user as $pr) {
-   // echo ($pr->id);
-    array_push($list_project_logged_user,$pr->id);
-    echo('<br>');
-}
+      
+        $global_inf=new globalController();
+        $list_project_logged_user= $global_inf->get_inf_project();
 
         return parent::getEloquentQuery()->whereIn('project_id', $list_project_logged_user);
     }
     public static function table(Table $table): Table
-    {
-        
+    {  
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('projects.description')->label('project-name')
+                Tables\Columns\TextColumn::make('project_id')
  ->searchable()
 
  ->sortable(),
