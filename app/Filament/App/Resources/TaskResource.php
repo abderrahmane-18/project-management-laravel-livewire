@@ -108,6 +108,7 @@ Log::info(Project::whereIn('name', $list_project_logged_user)->get('name'));
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -14,7 +14,12 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements FilamentUser
 
 {
-    
+    const role_admin='admin';
+    const role_user='user';
+    const ROLES=[
+        self::role_admin=>'admin',
+        self::role_user=>'user'
+    ];
     use HasApiTokens, HasFactory, Notifiable,HasRoles;
     
     /**
@@ -26,6 +31,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -54,6 +60,10 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return true ;
+    }
+    public function is_Admin()
+    {
+        return $this->role===self::role_admin;
     }
     
 }
